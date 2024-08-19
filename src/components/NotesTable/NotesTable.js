@@ -1,8 +1,13 @@
-import { Box } from "@mui/material"
+import { Box, Button } from "@mui/material"
 import { DataGrid } from "@mui/x-data-grid"
 
+const NotesTable = ({ notes, setNotes, setSelectedRows }) => {
+    const handleSelectionChange = (selection) => setSelectedRows(selection)
 
-const NotesTable = ({notes}) => {
+    const handleDelete = (title) => {
+        setNotes(prevNotes => prevNotes.filter(note => note.title !== title))
+    }
+
     const columns = [
         {
             field: "title",
@@ -12,15 +17,30 @@ const NotesTable = ({notes}) => {
         {
             field: "note",
             headerName: "Note",
-            flex: 1,
+            flex: 2,
+        },
+        {
+            field: "actions",
+            headerName: "Actions",
+            flex: 0.5,
+            renderCell: (params) => (
+                <Button variant="contained" color="secondary" onClick={() => handleDelete(params.row.title)}>
+                    Delete
+                </Button>
+            ),
         },
     ]
-
 
     return (
         <Box m="20px">
             <Box m="40px 0 0 0" height="75vh">
-                <DataGrid checkboxSelection rows={notes} columns={columns} getRowId={row => row.title } />
+                <DataGrid 
+                    checkboxSelection 
+                    rows={notes} 
+                    columns={columns} 
+                    getRowId={row => row.title} 
+                    onRowSelectionModelChange={(selection) => handleSelectionChange(selection)} 
+                />
             </Box>
         </Box>
     )

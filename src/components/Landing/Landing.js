@@ -1,4 +1,4 @@
-import { Box, Snackbar, IconButton } from "@mui/material"
+import { Box, Snackbar, IconButton, Button } from "@mui/material"
 import NotesForm from "../NotesForm/NotesForm"
 import React, { useState } from "react"
 import CloseIcon from '@mui/icons-material/Close';
@@ -6,9 +6,15 @@ import NotesTable from "../NotesTable/NotesTable";
 
 
 const Landing = () => {
+  const [selectedRows, setSelectedRows] = useState([])
+
     const [notes, setNotes] = useState([])
     const [feedback, setFeedback] = useState({open: false, message: ""})
     const handleClose = () => setFeedback({open: false, message: ""})
+
+    const handleUpdate = () => console.log(selectedRows)
+
+
     const action = (
         <React.Fragment>
           <IconButton
@@ -31,7 +37,8 @@ const Landing = () => {
                 action={action}
             />
             <NotesForm setFeedback={setFeedback} setNotes={setNotes}/>
-            <NotesTable notes={notes}/>
+            <Button variant="outlined" color="success" onClick={handleUpdate}>Update Notes</Button>
+            <NotesTable notes={notes} setNotes={setNotes} setSelectedRows={setSelectedRows}/>
         </Box>
     )
 }

@@ -15,7 +15,10 @@ const NotesForm = ({setFeedback, setNotes}) =>  {
             // Failed to save note: Display Error
             setFeedback({ open: true, message: "Failed to save note..." })
         }
-        setNotes(prevNotes => [...prevNotes, noteData]);
+        if (noteData.title != "") {
+            setNotes(prevNotes => [...prevNotes, noteData]);
+
+        }
     }
     return (
         <Box sx={{ flexGrow: 1, flexWrap: 'wrap' }}>
